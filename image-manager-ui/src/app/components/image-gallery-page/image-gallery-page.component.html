@@ -1,0 +1,170 @@
+<!-- ================= FOLDER SELECTION ================= -->
+<div class="folder-selection">
+  <label>Select Folder:</label>
+  <select [(ngModel)]="selectedFolder" (change)="loadImages()">
+    <option *ngFor="let f of folders" [value]="f">{{ f }}</option>
+  </select>
+</div>
+
+<!-- ================= MAIN CONTENT ================= -->
+<div *ngIf="selectedFolder" class="main-content">
+
+  <!-- ========== IMAGE DISPLAY LEFT ========== -->
+  <div class="image-section">
+
+    <!-- Navigation -->
+    <div *ngIf="images.length > 0" class="navigation-buttons">
+      <button (click)="previousImage()" [disabled]="!hasPrevious()">Previous</button>
+      <button (click)="nextImage()" [disabled]="!hasNext()">Next</button>
+    </div>
+
+    <!-- Main Image -->
+    <div *ngIf="selectedImage" class="image-container">
+      <img [src]="getImageUrl()" [alt]="selectedImage" class="responsive-image">
+    </div>
+
+    <!-- Start Slideshow Button -->
+    <button *ngIf="images.length > 0" (click)="startFullscreenSlideshow()">
+      Start Slideshow
+    </button>
+
+    <!-- Empty Folder Message -->
+    <div *ngIf="images.length === 0">
+      <p>No images in this folder.</p>
+    </div>
+  </div>
+
+  <!-- ========== RATING PANEL RIGHT ========== -->
+  <div *ngIf="selectedImage" class="rating-panel">
+    <h3>Rate Image</h3>
+    <div class="rating-inputs">
+      <input type="text" [(ngModel)]="rating.name" placeholder="Name">
+      <input type="text" [(ngModel)]="rating.tag" placeholder="Tag">
+
+      <label>Photo: {{ rating.ratingPhoto }}
+        <input type="range" min="0" max="10" [(ngModel)]="rating.ratingPhoto">
+      </label>
+
+      <label>Light: {{ rating.ratingLight }}
+        <input type="range" min="0" max="10" [(ngModel)]="rating.ratingLight">
+      </label>
+
+      <label>Background: {{ rating.ratingBackground }}
+        <input type="range" min="0" max="10" [(ngModel)]="rating.ratingBackground">
+      </label>
+
+      <label>misc1: {{ rating.misc1 }}
+        <input type="range" min="0" max="10" [(ngModel)]="rating.misc1">
+      </label>
+
+      <label>misc2: {{ rating.misc2 }}
+        <input type="range" min="0" max="10" [(ngModel)]="rating.misc2">
+      </label>
+
+      <button (click)="saveRating()">Save Rating</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= FULLSCREEN SLIDESHOW ================= -->
+<div *ngIf="slideshowFullscreen" class="slideshow-fullscreen" (click)="exitFullscreen()">
+  <button class="slideshow-nav left" (click)="prevSlideshowImage($event)">&#10094;</button>
+
+  <img [src]="getImageUrl()" [alt]="selectedImage" class="fullscreen-image">
+
+  <button class="slideshow-nav right" (click)="nextSlideshowImage($event)">&#10095;</button>
+
+  <div class="slideshow-close">Click anywhere to exit</div>
+</div>
+
+<!-- ================= CSS ================= -->
+<style>
+.folder-selection { margin: 15px 0; }
+
+.main-content {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.image-section { flex: 1; text-align: center; }
+
+.navigation-buttons { margin-bottom: 10px; }
+
+.image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.responsive-image {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.rating-panel {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+}
+
+.rating-inputs { display: flex; flex-direction: column; gap: 10px; }
+.rating-inputs input[type="text"] { padding: 5px; }
+.rating-inputs input[type="range"] { width: 100%; }
+.rating-inputs button { padding: 5px; }
+
+.slideshow-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  cursor: pointer;
+  flex-direction: column;
+}
+
+.fullscreen-image {
+  max-width: 95%;
+  max-height: 95%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.slideshow-close {
+  color: white;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Navigation arrows */
+.slideshow-nav {
+  position: absolute;
+  top: 50%;
+  color: white;
+  font-size: 48px;
+  background: rgba(0,0,0,0.3);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  transform: translateY(-50%);
+  z-index: 1001;
+  user-select: none;
+}
+
+.slideshow-nav.left { left: 20px; }
+.slideshow-nav.right { right: 20px; }
+
+.slideshow-nav:hover {
+  background: rgba(0,0,0,0.6);
+}
+</style>

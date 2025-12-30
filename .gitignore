@@ -1,0 +1,17 @@
+# ========== ANGULAR ==========
+image-manager-ui/node_modules/
+image-manager-ui/dist/
+image-manager-ui/.angular/
+
+# ========== ASP.NET ==========
+bin/
+obj/
+*.user
+*.suo
+
+# ========== VISUAL STUDIO ==========
+.vs/
+
+# ========== ENV ==========
+.env
+appsettings.Development.json

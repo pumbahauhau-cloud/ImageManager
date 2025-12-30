@@ -1,0 +1,33 @@
+<div style="display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid #ccc; margin-bottom:15px;">
+  <button (click)="goToGallery()">Back to Gallery</button>
+  <button (click)="logout()">Logout</button>
+</div>
+
+<div style="display:flex; gap:15px; align-items:center; margin-bottom:20px;">
+  <label>
+    Top N:
+    <input type="number" [(ngModel)]="topN" min="1" style="width:60px;">
+  </label>
+
+  <label>
+    Criteria:
+    <select [(ngModel)]="criteria">
+      <option value="overall">Overall</option>
+      <option value="Photo">Photo</option>
+      <option value="Light">Light</option>
+      <option value="Background">Background</option>
+      <option value="misc1">misc1</option>
+      <option value="misc2">misc2</option>
+    </select>
+  </label>
+
+  <button (click)="refresh()">Apply</button>
+</div>
+
+<div class="ranking-grid">
+  <div *ngFor="let item of rankedImages; let i = index" class="ranking-card">
+    <div class="badge">#{{ i + 1 }}</div>
+    <img [src]="getImageUrl(item.imagePath)" alt="Image {{ i + 1 }}">
+    <div class="score">Score: {{ item.score | number:'1.1-2' }}</div>
+  </div>
+</div>

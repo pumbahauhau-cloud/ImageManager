@@ -1,0 +1,131 @@
+<!-- ================= TOP BAR ================= -->
+<div class="top-bar">
+  <div class="app-title">
+    <h2>Image Rater Application</h2>
+  </div>
+  <div class="user-info">
+    <strong>{{ username }}</strong><br>
+    <button (click)="logout()">Logout</button>
+  </div>
+</div>
+
+<div class="navigation-button">
+  <button routerLink="/ranking">View Rankings</button>
+</div>
+
+
+<!-- Link to Image Gallery Page -->
+<div style="margin: 15px 0;">
+  <button routerLink="/imagegallery">Go to Image Gallery</button>
+</div>
+
+<a href="https://localhost:7225/swagger/index.html" target="_blank">
+  Open Swagger UI
+</a>
+
+<!-- ================= FOLDER SELECTION ================= -->
+<div class="folder-selection">
+  <label>Select Folder:</label>
+  <select [(ngModel)]="selectedFolder" (change)="loadImages()">
+    <option *ngFor="let f of folders" [value]="f">{{ f }}</option>
+  </select>
+</div>
+
+<!-- ================= MAIN CONTENT ================= -->
+<div *ngIf="selectedFolder" class="main-content">
+
+  <!-- ================= IMAGE SECTION ================= -->
+  <div class="image-section">
+
+    <!-- Move Image -->
+    <div *ngIf="images.length > 0" class="move-image">
+      <label>Move to:</label>
+      <select #moveFolder>
+        <option *ngFor="let f of folders" [value]="f" [disabled]="f === selectedFolder">{{ f }}</option>
+      </select>
+      <button (click)="moveImage(moveFolder.value)" [disabled]="!selectedImage">Move</button>
+    </div>
+
+    <!-- Navigation -->
+    <div *ngIf="images.length > 0" class="navigation-buttons">
+      <button (click)="previousImage()" [disabled]="!hasPrevious()">Previous</button>
+      <button (click)="nextImage()" [disabled]="!hasNext()">Next</button>
+    </div>
+
+    <!-- Image Display -->
+    <div *ngIf="selectedImage" class="image-container">
+      <img [src]="getImageUrl()" [alt]="selectedImage" class="responsive-image">
+    </div>
+
+    <!-- Empty Folder Message -->
+    <div *ngIf="images.length === 0">
+      <p>No images in this folder.</p>
+    </div>
+
+  </div>
+
+  <!-- ================= RATING PANEL ================= -->
+  <div *ngIf="selectedImage" class="rating-panel">
+    <h3>Rate Image</h3>
+    <div class="rating-inputs">
+
+      <input type="text" [(ngModel)]="rating.name" placeholder="Name">
+      <input type="text" [(ngModel)]="rating.tag" placeholder="Tag">
+
+      <label>Photo: {{ rating.ratingPhoto }}
+        <input type="range" min="0" max="10" [(ngModel)]="rating.ratingPhoto">
+      </label>
+
+      <label>Light: {{ rating.ratingLight }}
+        <input type="range" min="0" max="10" [(ngModel)]="rating.ratingLight">
+      </label>
+
+      <label>Background: {{ rating.ratingBackground }}
+        <input type="range" min="0" max="10" [(ngModel)]="rating.ratingBackground">
+      </label>
+
+      <label>misc1: {{ rating.misc1 }}
+        <input type="range" min="0" max="10" [(ngModel)]="rating.misc1">
+      </label>
+
+      <label>misc2: {{ rating.misc2 }}
+        <input type="range" min="0" max="10" [(ngModel)]="rating.misc2">
+      </label>
+
+      <button (click)="saveRating()">Save Rating</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= CSS ================= -->
+<style>
+  .top-bar {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:10px; border-bottom:1px solid #ccc;
+  }
+  .app-title { flex:1; text-align:center; }
+  .user-info { text-align:right; }
+
+  .navigation-button { margin: 10px 0; }
+
+  .folder-creation, .folder-selection, .upload-section {
+    display:flex; gap:10px; margin:15px 0; align-items:center;
+  }
+
+  .upload-section { flex-direction:column; border:1px solid #ccc; padding:10px; border-radius:8px; }
+  .file-list { margin-top:10px; text-align:left; }
+
+  .main-content { display:flex; gap:30px; }
+
+  .image-section { flex:1; text-align:center; }
+  .move-image, .navigation-buttons { margin-bottom:10px; }
+  .image-container { max-width:100%; }
+  .responsive-image { max-width:100%; max-height:500px; object-fit:contain; border-radius:8px; }
+
+  .rating-panel { flex:1; border:1px solid #ccc; border-radius:8px; padding:15px; }
+  .rating-inputs { display:flex; flex-direction:column; gap:10px; }
+  .rating-inputs input[type="text"] { padding:5px; }
+  .rating-inputs input[type="range"] { width:100%; }
+  .rating-inputs button { padding:5px; }
+</style>

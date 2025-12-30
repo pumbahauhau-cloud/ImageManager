@@ -1,0 +1,88 @@
+/* Container */
+:host {
+  display: block;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Folder and upload section */
+div > label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+select, input[type="file"], input[type="text"] {
+  margin: 5px 0;
+}
+
+/* Image display */
+img {
+  display: block;
+  margin: 20px auto;
+  max-width: 80%;
+  max-height: 400px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Navigation buttons */
+button {
+  margin: 5px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid #007bff;
+  background-color: #007bff;
+  color: white;
+}
+
+button:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+/* Move section */
+div select {
+  margin-right: 10px;
+}
+
+/* Rating sliders */
+div input[type="range"] {
+  margin: 5px 10px 5px 0;
+}
+
+/* Rating section container */
+.rating-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+/* Slider labels */
+.rating-container label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.image-container {
+  max-width: 100%;
+  max-height: 500px;   /* Adjust as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;    /* Prevent image from spilling out */
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  padding: 5px;
+}
+
+.responsive-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;  /* Maintains aspect ratio */
+  border-radius: 8px;
+}

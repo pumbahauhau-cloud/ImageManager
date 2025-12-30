@@ -1,0 +1,16 @@
+<div class="login-container">
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <label>Username:</label>
+    <input type="text" formControlName="username" />
+
+    <label>Password:</label>
+    <input type="password" formControlName="password" />
+
+    <button type="submit">Login</button>
+  </form>
+
+  <p>
+    Don't have an account?
+    <a (click)="goToSignup()" style="cursor:pointer; color:blue;">Sign up here</a>
+  </p>
+</div>
