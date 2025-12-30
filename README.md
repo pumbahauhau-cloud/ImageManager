@@ -86,9 +86,6 @@ ImageManager.Api/
 
 ## 🖼 Screenshots
 
-*(Add screenshots of the Angular UI and API responses here to make it visually appealing)*
-
----
 
 ## 📄 License
 
